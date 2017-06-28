@@ -2,11 +2,11 @@
   Created by IntelliJ IDEA.
   User: akruti
   Date: 26/6/17
-  Time: 11:14 PM
+  Time: 8:23 PM
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title></title>
     <asset:stylesheet src="mainPage.css"/>
@@ -18,23 +18,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 
-<body class="view panel panel-default">
-        <g:each in="${groupInstances}" var="group">
-            <h1 style="color: #d9534f"><b>${group.name}</b></h1>
-            <g:each in="${group.contacts}" var="mycontact">
-               <h3 style="color: #006dba">
-                <b>Name:</b> ${mycontact.firstName} ${mycontact.lastName},
-                <b>Phone number:</b> ${mycontact.phone}
-                   <br>
-                   <br>
-                   <g:link action="delete" class="btn btn-danger" id="${mycontact.id}"><b> Delete </b></g:link>
-                   <g:link action="updateContact" class="btn btn-success" id="${mycontact.id}"><b> Update </b></g:link>
-                <br>
-                <br>
-               </h3>
-            </g:each>
-        </g:each>
-<br>
-<a href="/contact/index" > Click here to return to the Main Page </a>
+<body>
+<form action="/contact/saveUpdate" class="option myColor">
+    <h2>
+        <input type="hidden" name="gName" value="${updateContacts[0].name}">
+        <br>
+        <label>Enter First Name </label> <input type="text" class="form-control" name="fname"  value="${updateContacts[1].firstName}" required>
+        <br>
+        <label>Enter Last Name </label> <input type="text" class="form-control" name="lname"  value="${updateContacts[1].lastName}" required>
+        <br>
+        <label>Enter Phone Number </label> <input type="number" class="form-control" name="pno" value="${updateContacts[1].phone}" required>
+        <br>
+        <input type="hidden" name="id" value="${updateContacts[1].id}">
+        <input type="submit" class="btn btn-primary btn-block">
+    </h2>
+</form>
 </body>
 </html>

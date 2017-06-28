@@ -8,5 +8,5 @@ class Contact {
     String firstName
     String lastName
     Integer phone
-    Integer id
+    String id
 }

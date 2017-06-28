@@ -2,52 +2,95 @@ package group.org.ep
 
 class ContactController {
 
-    List<Group> groupInstances = []
-    Integer contactId = 1
     def index() {
-
     }
 
     def createGroup() {
     }
 
     def saveGroup() {
-        println params.gname
+
         Map groupMap = [:]
         groupMap.name = params.gname
-        println groupMap
         Group myGroup = new Group(groupMap)
-        groupInstances << myGroup
+        UserDetails.groupInstances << myGroup
         redirect(action: "index")
     }
 
     def createContact() {
 
-        [groupInstance: groupInstances]
+        [groupInstance: UserDetails.groupInstances]
     }
+
     def saveContact() {
         Map contactMap = [:]
         contactMap.firstName = params.fname
         contactMap.lastName = params.lname
         contactMap.phone = Integer.parseInt(params.pno)
-        contactMap.id = contactId
+        contactMap.id = UserDetails.id
         Contact myContact = new Contact(contactMap)
-        Group groupFound = groupInstances.find {it.name.equals(params.gName)}
+        Group groupFound = UserDetails.groupInstances.find {it.name.equals(params.gName)}
         groupFound.contacts << myContact
-        contactId++
+        UserDetails.id++
         redirect(action: "index")
     }
 
     def view() {
-        [groupInstances: groupInstances]
+        [groupInstances: UserDetails.groupInstances]
     }
 
     def delete() {
-        groupInstances.each { grp ->
+        UserDetails.groupInstances.each { grp ->
             grp.contacts.removeAll {
-                it.id == Integer.parseInt(params.id)
+                it.id == params.id
             }
         }
+        redirect(action: "view")
+    }
+
+    def updateContact() {
+
+        Integer groupIndex
+        Contact updateContact
+        println params.id
+
+        UserDetails.groupInstances.eachWithIndex { grp, index ->
+            grp.contacts.each{ cont ->
+                if(cont.id == params.id) {
+                        updateContact = cont
+                        groupIndex = index
+                }
+            }
+        }
+
+        UserDetails.groupInstances.each { grp ->
+            grp.contacts.removeAll {
+                it.id == params.id
+            }
+        }
+        println updateContact
+        println groupIndex
+        def myGroup = UserDetails.groupInstances.get(groupIndex)
+        List updateList = [myGroup, updateContact]
+        println updateList
+        [updateContacts: updateList]
+    }
+
+    def saveUpdate() {
+
+        println params
+        println params.fname
+        println params.lname
+        println params.id
+
+        Map contactMap = [:]
+        contactMap.firstName = params.fname
+        contactMap.lastName = params.lname
+        contactMap.phone = Integer.parseInt(params.pno)
+        contactMap.id = params.id
+        Contact myContact = new Contact(contactMap)
+        Group groupFound = UserDetails.groupInstances.find {it.name.equals(params.gName)}
+        groupFound.contacts << myContact
         redirect(action: "view")
     }
 }
