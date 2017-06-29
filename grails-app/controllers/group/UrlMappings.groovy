@@ -8,8 +8,11 @@ class UrlMappings {
                 // apply constraints here
             }
         }
+        "/" {
+            controller = "contact"
+            action = "index"
+        }
 
-        "/"(view:"/index")
         "500"(view:'/error')
         "404"(view:'/notFound')
     }

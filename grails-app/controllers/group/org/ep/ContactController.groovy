@@ -11,7 +11,16 @@ class ContactController {
     def saveGroup() {
 
         Map groupMap = [:]
+        Group groupExist = UserDetails.groupInstances.find {
+            it.name.equals(params.gname)
+        }
+
+        if(groupExist) {
+            render "Group Already Exists."
+            return 
+        }
         groupMap.name = params.gname
+
         Group myGroup = new Group(groupMap)
         UserDetails.groupInstances << myGroup
         redirect(action: "index")

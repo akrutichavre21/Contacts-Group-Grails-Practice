@@ -27,8 +27,8 @@
                 <b>Phone number:</b> ${mycontact.phone}
                    <br>
                    <br>
-                   <g:link action="delete" class="btn btn-danger" id="${mycontact.id}"><b> Delete </b></g:link>
                    <g:link action="updateContact" class="btn btn-success" id="${mycontact.id}"><b> Update </b></g:link>
+                   <g:link action="delete" class="btn btn-danger" id="${mycontact.id}"><b> Delete </b></g:link>
                 <br>
                 <br>
                </h3>

@@ -6,5 +6,5 @@ package group.org.ep
 class UserDetails {
 
     static List<Group> groupInstances = []
-    static String id = "0"
+    static String id = "1"
 }
